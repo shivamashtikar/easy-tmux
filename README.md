@@ -10,7 +10,7 @@ A streamlined `tmux` configuration setup designed to enhance your terminal multi
 * **Fuzzy Finder Integration**: Quickly switch between windows and panes using `tmux-fzf`.
 * **Clipboard Support**: Copy to system clipboard with `xclip` or `pbcopy`, depending on your OS.
 * **Mouse Support**: Enable mouse interactions for pane selection and resizing.
-* **Custom Theme**: Aesthetic status bar with directory name display using `tmux-onedark-theme`.([GitHub][1])
+* **Custom Theme**: Aesthetic status bar with directory name display using `tmux-onedark-theme`.
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ Ensure the following are installed on your system:
 This script will:
 
 * Copy the `tmux.conf` file to your home directory as `.tmux.conf`.
-* Clone the [Tmux Plugin Manager (TPM)](https://github.com/tmux-plugins/tpm) into `~/.tmux/plugins/tpm`.([Gist][2])
+* Clone the [Tmux Plugin Manager (TPM)](https://github.com/tmux-plugins/tpm) into `~/.tmux/plugins/tpm`.
 
 3. **Install Plugins**:
 
@@ -82,7 +82,7 @@ This script will:
 * **[tmux-plugins/tmux-open](https://github.com/tmux-plugins/tmux-open)**: Enables opening highlighted selections with the system opener.
 * **[tmux-plugins/tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect)**: Saves and restores `tmux` sessions.
 * **[tmux-plugins/tmux-continuum](https://github.com/tmux-plugins/tmux-continuum)**: Automates saving of `tmux` environments.
-* **[shivamashtikar/tmux-onedark-theme](https://github.com/shivamashtikar/tmux-onedark-theme)**: Applies a One Dark theme to the status bar.([Gist][2], [GitHub][1])
+* **[shivamashtikar/tmux-onedark-theme](https://github.com/shivamashtikar/tmux-onedark-theme)**: Applies a One Dark theme to the status bar.
 
 ## Customization
 
@@ -92,7 +92,7 @@ Feel free to modify the `.tmux.conf` file to suit your preferences. For instance
 
 * **Clipboard Issues**: Ensure `xclip` (Linux) or `pbcopy/pbpaste` (macOS) is installed for clipboard integration.
 * **Plugin Installation**: If plugins aren't installing, verify that TPM is correctly cloned into `~/.tmux/plugins/tpm` and that you're pressing `Prefix + I` inside a `tmux` session.
-* **Mouse Support**: If mouse interactions aren't working, ensure that your terminal emulator supports mouse events and that `set -g mouse on` is present in your `.tmux.conf`.([Gist][2], [GitHub][1])
+* **Mouse Support**: If mouse interactions aren't working, ensure that your terminal emulator supports mouse events and that `set -g mouse on` is present in your `.tmux.conf`.
 
 ## License
 
