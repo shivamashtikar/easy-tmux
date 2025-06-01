@@ -2,6 +2,10 @@
 
 A streamlined `tmux` configuration setup designed to enhance your terminal multiplexing experience with intuitive keybindings, efficient pane management, and useful plugins.
 
+![Tmux](/assets/tmux.png)
+![Tmux Fzf](/assets/tmux-fzf.png)
+![Tmux Tree View](/assets/tmux-tree-view.png)
+
 ## Features
 
 * **Custom Keybindings**: Navigate and manage panes/windows using `Alt` and `Shift` combinations.
