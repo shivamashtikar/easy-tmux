@@ -1,0 +1,172 @@
+# Set default shell to Bash for cloud instances
+set-option -g default-shell /bin/bash
+
+set -g default-terminal "screen-256color"
+set-option -sa terminal-overrides ",xterm-256color:RGB"
+
+# to maintain long history
+set -g history-limit 10000
+
+# switching pane usin Alt+<arrow-keys>
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# pane navigation using Alt + hjkl
+bind -n M-h select-pane -L  # move left
+bind -n M-j select-pane -D  # move down
+bind -n M-k select-pane -U  # move up
+bind -n M-l select-pane -R  # move right
+
+# resize pane using Shift+<arrow-keys>
+bind -n S-Left resize-pane -L 2
+bind -n S-Right resize-pane -R 2
+bind -n S-Down resize-pane -D 1
+bind -n S-Up resize-pane -U 1
+
+
+# Create new panes and windows with current path
+bind c new-window -c "#{pane_current_path}"
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
+
+# create new window with Alt+n
+bind-key -n M-n new-window -c "#{pane_current_path}"
+# create new session with Alt+N
+bind-key -n M-N new-session -c "#{pane_current_path}"
+# horizontally split window using Alt+'
+bind-key -n "M-'" split-window -h -c "#{pane_current_path}"
+# vertically split window using Alt+/
+bind-key -n M-/ split-window -v -c "#{pane_current_path}"
+
+# current pane full screen toggle
+bind-key -n M-f resize-pane -Z
+bind-key -n M-s if-shell -F '#{==:#{PANE_VERTICAL},true}' {
+  resize-pane -y 70%
+  setenv -g PANE_VERTICAL false
+} {
+  resize-pane -y 100%
+  setenv -g PANE_VERTICAL true
+}
+
+bind-key -n M-v if-shell -F '#{==:#{PANE_HORIZONTAL},true}' {
+  resize-pane -x 70%
+  setenv -g PANE_HORIZONTAL false
+} {
+  resize-pane -x 100%
+  setenv -g PANE_HORIZONTAL true
+}
+
+
+# open tree view of all open window across session
+# use hjkl to navigate and <Enter> to select
+bind-key -n M-d resize-pane -Z \; choose-tree -w -F "#{pane_current_path} - #{pane_current_command}"
+
+# closing pane with Alt+q
+bind-key -n M-q confirm-before "kill-pane"
+# closing session with Alt+Q
+bind-key -n M-Q confirm-before "kill-window"
+# Kill current sesssion and switch to next session if present
+bind-key X run-shell 'tmux switch-client -n \; kill-session -t "$(tmux display-message -p "#S")" || tmux kill-session'
+
+# start window numbers at 1 to match keyboard order with tmux window order
+set -g base-index 1
+set-window-option -g pane-base-index 1
+set-window-option -g automatic-rename on
+set-window-option -g automatic-rename-format '#{b:pane_current_path}' # Show current directory in window title
+# renumber windows sequentially after closing any of them
+set -g renumber-windows on
+# switch between windows (tmux :b) using Alt+<num>
+bind-key -n M-1 select-window -t :1
+bind-key -n M-2 select-window -t :2
+bind-key -n M-3 select-window -t :3
+bind-key -n M-4 select-window -t :4
+bind-key -n M-5 select-window -t :5
+bind-key -n M-6 select-window -t :6
+bind-key -n M-7 select-window -t :7
+bind-key -n M-8 select-window -t :8
+bind-key -n M-9 select-window -t :9
+bind-key -n M-0 select-window -t :10
+bind-key -n M-= last-window
+
+# Window movement
+# move window to first position
+bind-key -n M-` move-window -t 0
+# swap window with left  window
+bind-key -n M-< swap-window -t -1
+# swap window with right window
+bind-key -n M-> swap-window -t +1
+# rotate pane
+bind-key -n M-r rotate-window
+
+# Pane Arrangement
+# arange panes in vertical split alongside main pane
+bind-key -n M-w select-layout main-vertical
+# arange panes in horizontal split alongside main pane
+bind-key -n M-e select-layout main-horizontal
+# arange panes in even vertical split
+bind-key -n M-W select-layout even-vertical
+# arange panes in even horizontal split
+bind-key -n M-E select-layout even-horizontal
+
+# Pane movement
+# mark currently focused pane
+bind-key -n M-x select-pane -m # mark
+# unmark currently focused pane
+bind-key -n M-X select-pane -M # unmark
+bind-key -n M-y switch-client -t'{marked}'
+# join marked pane with current window
+bind-key -n M-z join-pane
+# break current pane out of current window
+bind-key -n M-B break-pane
+# join pane from different window to this window
+# bind-key -n M-g command-prompt -p "horizontal join pane:"  "join-pane -v -s '%%'"
+# bind-key -n M-v command-prompt -p "vertical join pane to:"  "join-pane -h -s '%%'"
+# move pane to different window
+bind-key -n M-m command-prompt -p "move pane to:"  "move-pane -t '%%'"
+
+# Tmux popup window toggle using Alt+u
+bind-key -n M-u if-shell -F '#{==:#{session_name},scratch}' {
+  detach-client
+} {
+  display-popup -E "tmux new-session -A -s scratch"
+}
+
+# rename window with Alt+R
+bind-key -n M-R command-prompt -I "" "rename-window '%%'"
+
+# Quick view of processes (C+b p)
+# Note: 'htop' needs to be installed on the server (e.g., sudo apt-get install htop)
+bind-key p split-window -v 'exec htop'
+# Help screen: rebind list-keys window into a new pane (C+b ?)
+bind-key ? split-window -h 'exec tmux list-keys | less'
+# switch to last pane (C+b C+a)
+bind-key C-a last-pane
+
+
+# setting up visual mode
+setw -g mode-keys vi
+# Helps visual selection by pressing V
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+# copy selected text with y
+# For clipboard integration on Debian, you would need to install 'xclip' (sudo apt-get install xclip)
+# and uncomment the relevant line below.
+# if-shell "uname | grep -q Darwin" "bind -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel \"pbcopy\"" "bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'"
+# if-shell "uname | grep -q Darwin" "bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel \"pbcopy\"" "bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel \"xclip -in -selection clipboard\""
+set-option -g set-clipboard off
+
+
+# Use mouse to select pane
+set -g mouse on
+# 12 hour time
+set-window-option -g clock-mode-style 12
+set -g status-position top
+
+# Reload tmux.conf file
+# Note: This assumes the config file will be at ~/.tmux.conf on the server
+bind R source-file ~/.tmux.conf \; display "Reloaded .tmux.conf file"
+
+# No plugins are loaded in this cloud-friendly configuration.
+# If you need plugins, you would typically install TPM (Tmux Plugin Manager)
+# and add 'set -g @plugin ...' lines, then 'run ~/.tmux/plugins/tpm/tpm' at the end.
