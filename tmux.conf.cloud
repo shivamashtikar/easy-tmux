@@ -109,7 +109,7 @@ bind-key v if-shell -F '#{==:#{PANE_HORIZONTAL},true}' {
 # use hjkl to navigate and <Enter> to select
 bind-key -n M-d resize-pane -Z \; choose-tree -w -F "#{pane_current_path} - #{pane_current_command}"
 # Also with C-b prefix
-bind-key d resize-pane -Z \; choose-tree -w -F "#{pane_current_path} - #{pane_current_command}"
+# bind-key d resize-pane -Z \; choose-tree -w -F "#{pane_current_path} - #{pane_current_command}"
 
 # closing pane with Alt+q
 bind-key -n M-q confirm-before "kill-pane"
