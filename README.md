@@ -53,6 +53,16 @@ This script will:
 
    After starting `tmux`, press `Prefix` + `I` (that's `Ctrl+b` followed by `I`) to install the plugins specified in the configuration.
 
+## Quick Setup for Cloud Servers
+
+For a lightweight setup on a cloud server (without plugins), you can use this one-liner to download and install the `tmux.conf.cloud` configuration:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/shivamashtikar/easy-tmux/main/tmux.conf.cloud -o ~/.tmux.conf && tmux source-file ~/.tmux.conf
+```
+
+This command downloads the cloud-friendly configuration, saves it as `.tmux.conf` in your home directory, and immediately applies it to your current session.
+
 ## Keybindings Overview
 
 | Action                       | Keybinding                 |
