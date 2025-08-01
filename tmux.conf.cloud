@@ -242,6 +242,14 @@ bind-key u if-shell -F '#{==:#{session_name},scratch}' {
   display-popup -E "tmux new-session -A -s scratch"
 }
 
+# Popup window with fullscreen capability using Alt+U
+bind-key -n M-U if-shell -F '#{==:#{session_name},scratch}' {
+  detach-client
+} {
+  display-popup -E -d '#{pane_current_path}' -w 100% -h 100% "tmux new-session -A -s scratch"
+}
+
+
 # rename window with Alt+R
 bind-key -n M-R command-prompt -I "" "rename-window '%%'"
 # Also with C-b prefix
