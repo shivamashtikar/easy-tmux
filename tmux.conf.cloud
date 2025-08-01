@@ -261,11 +261,7 @@ setw -g mode-keys vi
 # Helps visual selection by pressing V
 bind-key -T copy-mode-vi v send-keys -X begin-selection
 # copy selected text with y
-# For clipboard integration on Debian, you would need to install 'xclip' (sudo apt-get install xclip)
-# and uncomment the relevant line below.
-# if-shell "uname | grep -q Darwin" "bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel \"pbcopy\"" "bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -in -selection clipboard'"
-# if-shell "uname | grep -q Darwin" "bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel \"pbcopy\"" "bind-key -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel \"xclip -in -selection clipboard\""
-set-option -g set-clipboard off
+set-option -g set-clipboard on
 
 
 # Use mouse to select pane
