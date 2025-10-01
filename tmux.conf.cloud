@@ -249,6 +249,63 @@ bind-key -n M-U if-shell -F '#{==:#{session_name},scratch}' {
   display-popup -E -d '#{pane_current_path}' -w 100% -h 100% "tmux new-session -A -s scratch"
 }
 
+# Popup window with current directory using Alt+i
+bind-key -n M-i run-shell '\
+  current_path="#{pane_current_path}"; \
+  current_session="#{session_name}"; \
+  path_hash=$(echo -n "$current_path" | md5sum | cut -d" " -f1 | cut -c1-8); \
+  popup_session="popup-$path_hash"; \
+  \
+  if echo "$current_session" | grep -q "^popup-"; then \
+    tmux detach-client; \
+  elif tmux has-session -t "$popup_session" 2>/dev/null; then \
+    tmux display-popup -E -d "$current_path" "tmux attach-session -t \"$popup_session\""; \
+  else \
+    tmux display-popup -E -d "$current_path" "tmux new-session -s \"$popup_session\" -c \"$current_path\""; \
+  fi'
+# Also with C-b prefix
+bind-key i run-shell '\
+  current_path="#{pane_current_path}"; \
+  current_session="#{session_name}"; \
+  path_hash=$(echo -n "$current_path" | md5sum | cut -d" " -f1 | cut -c1-8); \
+  popup_session="popup-$path_hash"; \
+  \
+  if echo "$current_session" | grep -q "^popup-"; then \
+    tmux detach-client; \
+  elif tmux has-session -t "$popup_session" 2>/dev/null; then \
+    tmux display-popup -E -d "$current_path" "tmux attach-session -t \"$popup_session\""; \
+  else \
+    tmux display-popup -E -d "$current_path" "tmux new-session -s \"$popup_session\" -c \"$current_path\""; \
+  fi'
+
+# Popup window with current directory fullscreen using Alt+I
+bind-key -n M-I run-shell '\
+  current_path="#{pane_current_path}"; \
+  current_session="#{session_name}"; \
+  path_hash=$(echo -n "$current_path" | md5sum | cut -d" " -f1 | cut -c1-8); \
+  popup_session="popup-$path_hash"; \
+  \
+  if echo "$current_session" | grep -q "^popup-"; then \
+    tmux detach-client; \
+  elif tmux has-session -t "$popup_session" 2>/dev/null; then \
+    tmux display-popup -E -d "$current_path" -w 100% -h 100% "tmux attach-session -t \"$popup_session\""; \
+  else \
+    tmux display-popup -E -d "$current_path" -w 100% -h 100% "tmux new-session -s \"$popup_session\" -c \"$current_path\""; \
+  fi'
+# Also with C-b prefix
+bind-key I run-shell '\
+  current_path="#{pane_current_path}"; \
+  current_session="#{session_name}"; \
+  path_hash=$(echo -n "$current_path" | md5sum | cut -d" " -f1 | cut -c1-8); \
+  popup_session="popup-$path_hash"; \
+  \
+  if echo "$current_session" | grep -q "^popup-"; then \
+    tmux detach-client; \
+  elif tmux has-session -t "$popup_session" 2>/dev/null; then \
+    tmux display-popup -E -d "$current_path" -w 100% -h 100% "tmux attach-session -t \"$popup_session\""; \
+  else \
+    tmux display-popup -E -d "$current_path" -w 100% -h 100% "tmux new-session -s \"$popup_session\" -c \"$current_path\""; \
+  fi'
 
 # rename window with Alt+R
 bind-key -n M-R command-prompt -I "" "rename-window '%%'"
