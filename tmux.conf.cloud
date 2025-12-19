@@ -9,35 +9,15 @@ set -g history-limit 10000
 
 # switching pane usin Alt+<arrow-keys>
 bind-key -n M-Left select-pane -L
-# Also with C-b prefix
-bind-key Left select-pane -L
 bind-key -n M-Right select-pane -R
-# Also with C-b prefix
-bind-key Right select-pane -R
 bind-key -n M-Up select-pane -U
-# Also with C-b prefix
-bind-key Up select-pane -U
 bind-key -n M-Down select-pane -D
-# Also with C-b prefix
-bind-key Down select-pane -D
 
 # pane navigation using Alt + hjkl
-# move left
 bind-key -n M-h select-pane -L
-# move left (C-b prefix)
-bind-key h select-pane -L
-# move down
 bind-key -n M-j select-pane -D
-# move down (C-b prefix)
-bind-key j select-pane -D
-# move up
 bind-key -n M-k select-pane -U
-# move up (C-b prefix)
-bind-key k select-pane -U
-# move right
 bind-key -n M-l select-pane -R
-# move right (C-b prefix)
-bind-key l select-pane -R
 
 # resize pane using Shift+<arrow-keys>
 bind-key -n S-Left resize-pane -L 2
@@ -53,34 +33,16 @@ bind-key % split-window -h -c "#{pane_current_path}"
 
 # create new window with Alt+n
 bind-key -n M-n new-window -c "#{pane_current_path}"
-# Also with C-b prefix
-bind-key n new-window -c "#{pane_current_path}"
 # create new session with Alt+N
 bind-key -n M-N new-session -c "#{pane_current_path}"
-# Also with C-b prefix
-bind-key N new-session -c "#{pane_current_path}"
 # horizontally split window using Alt+'
 bind-key -n "M-'" split-window -h -c "#{pane_current_path}"
-# Also with C-b prefix
-bind-key "'" split-window -h -c "#{pane_current_path}"
 # vertically split window using Alt+/
 bind-key -n M-/ split-window -v -c "#{pane_current_path}"
-# Also with C-b prefix
-bind-key / split-window -v -c "#{pane_current_path}"
 
 # current pane full screen toggle
 bind-key -n M-f resize-pane -Z
-# Also with C-b prefix
-bind-key f resize-pane -Z
 bind-key -n M-s if-shell -F '#{==:#{PANE_VERTICAL},true}' {
-  resize-pane -y 70%
-  setenv -g PANE_VERTICAL false
-} {
-  resize-pane -y 100%
-  setenv -g PANE_VERTICAL true
-}
-# Also with C-b prefix
-bind-key s if-shell -F '#{==:#{PANE_VERTICAL},true}' { 
   resize-pane -y 70%
   setenv -g PANE_VERTICAL false
 } {
@@ -95,30 +57,16 @@ bind-key -n M-v if-shell -F '#{==:#{PANE_HORIZONTAL},true}' {
   resize-pane -x 100%
   setenv -g PANE_HORIZONTAL true
 }
-# Also with C-b prefix
-bind-key v if-shell -F '#{==:#{PANE_HORIZONTAL},true}' { 
-  resize-pane -x 70%
-  setenv -g PANE_HORIZONTAL false
-} {
-  resize-pane -x 100%
-  setenv -g PANE_HORIZONTAL true
-}
 
 
 # open tree view of all open window across session
 # use hjkl to navigate and <Enter> to select
 bind-key -n M-d resize-pane -Z \; choose-tree -w -F "#{pane_current_path} - #{pane_current_command}"
-# Also with C-b prefix
-# bind-key d resize-pane -Z \; choose-tree -w -F "#{pane_current_path} - #{pane_current_command}"
 
 # closing pane with Alt+q
 bind-key -n M-q confirm-before "kill-pane"
-# Also with C-b prefix
-bind-key q confirm-before "kill-pane"
 # closing session with Alt+Q
 bind-key -n M-Q confirm-before "kill-window"
-# Also with C-b prefix
-bind-key Q confirm-before "kill-window"
 # Kill current sesssion and switch to next session if present
 bind-key X run-shell 'tmux switch-client -n \; kill-session -t "$(tmux display-message -p "#S")" || tmux kill-session'
 
@@ -132,111 +80,55 @@ set-window-option -g automatic-rename-format '#{b:pane_current_path}'
 set -g renumber-windows on
 # switch between windows (tmux :b) using Alt+<num>
 bind-key -n M-1 select-window -t :1
-# Also with C-b prefix
-bind-key 1 select-window -t :1
 bind-key -n M-2 select-window -t :2
-# Also with C-b prefix
-bind-key 2 select-window -t :2
 bind-key -n M-3 select-window -t :3
-# Also with C-b prefix
-bind-key 3 select-window -t :3
 bind-key -n M-4 select-window -t :4
-# Also with C-b prefix
-bind-key 4 select-window -t :4
 bind-key -n M-5 select-window -t :5
-# Also with C-b prefix
-bind-key 5 select-window -t :5
 bind-key -n M-6 select-window -t :6
-# Also with C-b prefix
-bind-key 6 select-window -t :6
 bind-key -n M-7 select-window -t :7
-# Also with C-b prefix
-bind-key 7 select-window -t :7
 bind-key -n M-8 select-window -t :8
-# Also with C-b prefix
-bind-key 8 select-window -t :8
 bind-key -n M-9 select-window -t :9
-# Also with C-b prefix
-bind-key 9 select-window -t :9
 bind-key -n M-0 select-window -t :10
-# Also with C-b prefix
-bind-key 0 select-window -t :10
 bind-key -n M-= last-window
-# Also with C-b prefix
-bind-key = last-window
 
 # Window movement
 # move window to first position
 bind-key -n M-` move-window -t 0
-# Also with C-b prefix
-bind-key '`' move-window -t 0
 # swap window with left  window
 bind-key -n M-< swap-window -t -1
-# Also with C-b prefix
-bind-key '<' swap-window -t -1
 # swap window with right window
 bind-key -n M-> swap-window -t +1
-# Also with C-b prefix
-bind-key '>' swap-window -t +1
 # rotate pane
 bind-key -n M-r rotate-window
-# Also with C-b prefix
-bind-key r rotate-window
 
 # Pane Arrangement
 # arange panes in vertical split alongside main pane
 bind-key -n M-w select-layout main-vertical
-# Also with C-b prefix
-bind-key w select-layout main-vertical
 # arange panes in horizontal split alongside main pane
 bind-key -n M-e select-layout main-horizontal
-# Also with C-b prefix
-bind-key e select-layout main-horizontal
 # arange panes in even vertical split
 bind-key -n M-W select-layout even-vertical
-# Also with C-b prefix
-bind-key W select-layout even-vertical
 # arange panes in even horizontal split
 bind-key -n M-E select-layout even-horizontal
-# Also with C-b prefix
-bind-key E select-layout even-horizontal
 
 # Pane movement
 # mark currently focused pane
 bind-key -n M-x select-pane -m
-# mark (C-b prefix)
-bind-key x select-pane -m
 # unmark currently focused pane
 bind-key -n M-X select-pane -M
-# unmark (C-b prefix)
-bind-key X select-pane -M
 bind-key -n M-y switch-client -t'{marked}'
-# Also with C-b prefix
-bind-key y switch-client -t'{marked}'
 # join marked pane with current window
 bind-key -n M-z join-pane
-# Also with C-b prefix
-bind-key z join-pane
 # break current pane out of current window
 bind-key -n M-B break-pane
-# Also with C-b prefix
-bind-key B break-pane
 # join pane from different window to this window
 # bind-key -n M-g command-prompt -p "horizontal join pane:"  "join-pane -v -s '%%'"
 # bind-key -n M-v command-prompt -p "vertical join pane to:"  "join-pane -h -s '%%'"
 # move pane to different window
 bind-key -n M-m command-prompt -p "move pane to:"  "move-pane -t '%%'"
-# Also with C-b prefix
-bind-key m command-prompt -p "move pane to:"  "move-pane -t '%%'"
 
 # Tmux popup window toggle using Alt+u
 bind-key -n M-u if-shell -F '#{==:#{session_name},scratch}' {
-  detach-client
-} {
-  display-popup -E "tmux new-session -A -s scratch"
-}
-# Also with C-b prefix
-bind-key u if-shell -F '#{==:#{session_name},scratch}' { 
   detach-client
 } {
   display-popup -E "tmux new-session -A -s scratch"
@@ -251,20 +143,6 @@ bind-key -n M-U if-shell -F '#{==:#{session_name},scratch}' {
 
 # Popup window with current directory using Alt+i
 bind-key -n M-i run-shell '\
-  current_path="#{pane_current_path}"; \
-  current_session="#{session_name}"; \
-  path_hash=$(echo -n "$current_path" | md5sum | cut -d" " -f1 | cut -c1-8); \
-  popup_session="popup-$path_hash"; \
-  \
-  if echo "$current_session" | grep -q "^popup-"; then \
-    tmux detach-client; \
-  elif tmux has-session -t "$popup_session" 2>/dev/null; then \
-    tmux display-popup -E -d "$current_path" "tmux attach-session -t \"$popup_session\""; \
-  else \
-    tmux display-popup -E -d "$current_path" "tmux new-session -s \"$popup_session\" -c \"$current_path\""; \
-  fi'
-# Also with C-b prefix
-bind-key i run-shell '\
   current_path="#{pane_current_path}"; \
   current_session="#{session_name}"; \
   path_hash=$(echo -n "$current_path" | md5sum | cut -d" " -f1 | cut -c1-8); \
@@ -292,25 +170,9 @@ bind-key -n M-I run-shell '\
   else \
     tmux display-popup -E -d "$current_path" -w 100% -h 100% "tmux new-session -s \"$popup_session\" -c \"$current_path\""; \
   fi'
-# Also with C-b prefix
-bind-key I run-shell '\
-  current_path="#{pane_current_path}"; \
-  current_session="#{session_name}"; \
-  path_hash=$(echo -n "$current_path" | md5sum | cut -d" " -f1 | cut -c1-8); \
-  popup_session="popup-$path_hash"; \
-  \
-  if echo "$current_session" | grep -q "^popup-"; then \
-    tmux detach-client; \
-  elif tmux has-session -t "$popup_session" 2>/dev/null; then \
-    tmux display-popup -E -d "$current_path" -w 100% -h 100% "tmux attach-session -t \"$popup_session\""; \
-  else \
-    tmux display-popup -E -d "$current_path" -w 100% -h 100% "tmux new-session -s \"$popup_session\" -c \"$current_path\""; \
-  fi'
 
 # rename window with Alt+R
 bind-key -n M-R command-prompt -I "" "rename-window '%%'"
-# Also with C-b prefix
-bind-key R command-prompt -I "" "rename-window '%%'"
 
 # Quick view of processes (C+b p)
 # Note: 'htop' needs to be installed on the server (e.g., sudo apt-get install htop)
@@ -321,12 +183,8 @@ bind-key ? split-window -h 'exec tmux list-keys | less'
 bind-key C-a last-pane
 
 
-# setting up visual mode
-setw -g mode-keys vi
-# Helps visual selection by pressing V
-bind-key -T copy-mode-vi v send-keys -X begin-selection
-# copy selected text with y
-set-option -g set-clipboard on
+# Fix for bracketed paste mode (prevents staircase effect in neovim)
+set -g assume-paste-time 0
 
 
 # Use mouse to select pane
